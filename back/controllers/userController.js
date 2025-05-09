@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const session = require('../models/session');
 const bcrypt = require('bcrypt');
 
 
@@ -15,8 +16,7 @@ const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
       phone,       // Save the phone number
-      occupation   // Save the selected or detected location
-        // Always force viewer role on registration
+      occupation   
     });
     
     res.status(201).json({
@@ -59,13 +59,25 @@ const loginUser = async (req, res) => {
     // Update the user's currentToken with the hashed token
     await user.update({ currentToken: hashedToken });
 
+    // Adjust the expiry time to your timezone (+3 hours)
+    const expiresAt = new Date(Date.now() + 3600000); // Add 1 hour
+    expiresAt.setHours(expiresAt.getHours() + 3);
+
+    // Store the session in the database
+    await session.create({
+      user_id: user.user_id,
+      session_token: hashedToken,
+      expires_at: expiresAt 
+    });
+
+
     // Set the token cookie with a global path.
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 3600000, // 1 hour
-      path: '/',      // available on every route
+      path: '/',    
     });
 
     console.log('Successful login for:', email);

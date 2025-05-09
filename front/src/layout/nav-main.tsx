@@ -17,6 +17,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { useAuth } from "@/hooks/useAuth";
 
 export function NavMain({
   items,
@@ -32,6 +33,28 @@ export function NavMain({
     }[]
   }[]
 }) {
+  const { isLoggedIn } = useAuth();
+  // Define the menu items based on the login state
+  // You can replace this with your actual logic to check if the user is logged in
+  // For example, you might want to check a token in local storage or a global state  
+  // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  // const isLoggedIn = true; // Example: replace with actual login check
+  // const isLoggedIn = false; // Example: replace with actual login check
+  const loggedOutMenu = [
+    { title: "Home", url: "/" },
+    { title: "Login", url: "/login" },
+    { title: "Register", url: "/register" },
+  ];
+
+  const loggedInMenu = [
+    { title: "Post a Service", url: "/services/post" },
+    { title: "My Services", url: "/services/my-services" },
+    { title: "Browse Services", url: "/services/browse" },
+    { title: "Delete a Service", url: "/services/delete" },
+  ];
+
+  const menuItems = isLoggedIn ? loggedInMenu : loggedOutMenu;
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>

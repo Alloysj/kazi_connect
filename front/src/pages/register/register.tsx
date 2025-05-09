@@ -4,11 +4,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+// import { Label } from "@/components/ui/label";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { toast, Toaster } from "sonner";
 import apiClient from "@/lib/api-client";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useState } from "react";
 
 const registrationSchema = z.object({
@@ -33,13 +33,18 @@ export function RegistrationForm() {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     console.log("Form submitted:", data);
     setLoading(true)
     const toastL = toast.loading("signing you up... ");
     await apiClient.post('/users/register', data)
-    .then((res)=>{
+    .then(()=>{
+      toast.dismiss(toastL);
+      toast.success("Registration successful! Redirecting to login...");
+      setTimeout(() => {
         navigate('/login');
+      }
+      , 3000);
     }).catch((res)=>{
       console.log(res);
       toast.dismiss(toastL);

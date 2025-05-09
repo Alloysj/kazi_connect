@@ -32,7 +32,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     setLoading(true);
     const toastL = toast.loading("Signin in... ");
     await apiClient.post('/users/login',values)
-    .then((res)=>{
+    .then(()=>{
       toast.dismiss(toastL);
       navigate('/');
     })

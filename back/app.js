@@ -11,6 +11,7 @@ var port = process.env.PORT || 5000;
 var indexRouter = require('./routes/index');
 const userRoutes = require('./routes/users');
 const serviceRoutes = require('./routes/serviceRoutes');
+const authRoutes = require('./routes/auth')
 
 // Database and auth
 const sequelize = require('./config/database');
@@ -51,6 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', userRoutes);
 app.use('/services', serviceRoutes);
+app.use('/auth', authRoutes);
 
 // Database synchronization
 sequelize.sync({ force: false })
