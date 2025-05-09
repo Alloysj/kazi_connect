@@ -1,0 +1,9 @@
+{
+  "name": "kaziconnect",
+  "private": true,
+  "workspaces": [
+    "front",
+    "back",
+    "packages/a"
+  ]
+}

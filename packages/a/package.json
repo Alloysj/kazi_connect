@@ -1,0 +1,23 @@
+{
+  "name": "a",
+  "version": "1.0.0",
+  "description": "kaziconnect-package",
+  "keywords": [
+    "kazi_connect"
+  ],
+  "homepage": "https://github.com/Alloysj/kazi_connect#readme",
+  "bugs": {
+    "url": "https://github.com/Alloysj/kazi_connect/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alloysj/kazi_connect.git"
+  },
+  "license": "ISC",
+  "author": "Alloysj",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  }
+}
